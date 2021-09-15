@@ -1,0 +1,16 @@
+protoc:
+  version: 3.11.0
+lint:
+  group: uber3
+  rules:
+    remove:
+      - ENUM_ZERO_VALUES_INVALID
+      - ENUM_ZERO_VALUES_INVALID_EXCEPT_MESSAGE
+generate:
+  go_options:
+    import_path: github.com/lokopay/loko-services/protos
+  plugins:
+    - name: go
+      type: go
+      flags: plugins=grpc,paths=source_relative
+      output: ../pkg/grpc

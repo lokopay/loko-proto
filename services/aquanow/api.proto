@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package bleev.services.aquanow.v1;
+
+option go_package           = "aquanowv1";
+
+// service exchange is a service that handles interaction with kraken.
+service ServiceAquanowAPI {
+
+  // CheckPrice will check price for a given coin
+  rpc CheckPrice(CheckPriceRequest)
+      returns (CheckPriceResponse) {}
+}
+
+enum CoinName {
+  BTC = 0;
+  ETH = 1;
+  LTC = 2;
+}
+
+enum Currency {
+  USD = 0;
+  CAD = 1;
+}
+
+message CheckPriceRequest {
+  CoinName coinName = 1;
+  Currency currency = 2;
+  int32   volume   = 3;
+  double   amount   = 4;
+}
+
+message CheckPriceResponse { 
+  CoinName coinName  = 1;
+  Currency currency  = 2;
+  double   price     = 3;
+  double   buyPrice  = 4;
+  double   sellPrice = 5;
+  double   updatedAt = 6;
+}

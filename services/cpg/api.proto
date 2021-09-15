@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package bleev.services.cpg.v1;
+
+option java_multiple_files  = true;
+option java_package         = "com.bleev.services.cpg.v1";
+option java_outer_classname = "CPGServiceAPIProto";
+option go_package           = "cpgv1";
+option objc_class_prefix    = "BSC";
+
+service ServiceCPGAPI {
+    
+    rpc UpdateInvoiceByBroadcastMessage(TxRequest) returns (GeneralResponse) {};
+
+    rpc UpdateInvoiceByComfirmedMessage(TxRequest) returns (GeneralResponse) {};
+}
+
+message TxRequest{
+    string txid          = 1;
+    string txHash        = 2;
+    string txAddress     = 3;
+    double txAmount      = 4;
+    double txFee         = 5;
+    string broadcast     = 6;
+    int64  confirmations = 7;
+}
+
+message GeneralResponse {
+    int32  code    = 1;
+    string message = 2;
+}

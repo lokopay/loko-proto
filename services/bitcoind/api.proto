@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package bleev.services.bitcoind.v1;
+
+option java_multiple_files  = true;
+option java_package         = "com.bleev.services.bitcoind.v1";
+option java_outer_classname = "BitcoindServiceApiProto";
+option go_package           = "services/bitcoindv1";
+option csharp_namespace     = "Nba.Services.Bitcoind.V1";
+option objc_class_prefix    = "BSB";
+option php_namespace        = "Bleev\\Services\\Bitcoind\\V1";
+
+// service exchange is a service that handles interaction with kraken.
+service ServiceBitcoindAPI {
+
+  // GetNewAddress will check price for a given coin
+  rpc GetNewAddress(GetNewAddressRequest)
+      returns (GetNewAddressResponse) {}
+
+  // GetNewP2SHP2WPKHAddr will get a new P2SH-P2WPKH address
+  rpc GetNewP2SHP2WPKHAddress (GetNewAddressRequest) 
+      returns (AddressResponse){}
+
+  rpc GetNewP2WPKHAddress (GetNewAddressRequest) 
+      returns (AddressResponse){}
+  
+  // GetBalance will update a moment.
+  rpc GetBalance(GetBalanceRequest)
+      returns (GetBalanceResponse) {}
+
+  // ReceiveCoins will commit to the purchase of a moment.
+  rpc ReceiveCoins(ReceiveCoinsRequest)
+      returns (ReceiveCoinsResponse) {}
+  
+  // SendCoins will verify an order token, confirm the
+  rpc SendCoins(SendCoinsRequest)
+      returns (SendCoinsResponse) {}
+}
+
+message GetNewAddressRequest {
+  string label   = 1;
+  int64  expires = 2;
+}
+
+message AddressResponse {
+  string address      = 1;
+  string scriptPubKey = 2;
+  int64  timestamp    = 3;
+  int64  txFee        = 4;
+}
+
+message GetNewAddressResponse { 
+  string address = 1;
+}
+
+message SendCoinsRequest { 
+  string address   = 1;
+  int64  volume    = 2;
+  string comment   = 3;
+  string commentTo = 4;
+}
+
+message SendCoinsResponse {
+  string txid          = 1;
+  string txHash        = 2;
+  string txAddress     = 3;
+  string txAmount      = 4;
+  int64  txFee         = 5;
+  int64  timestamp     = 6;
+  int64  confirmations = 7;
+}
+
+message GetBalanceRequest {}
+
+message GetBalanceResponse { 
+  int64 volume = 1;
+}
+
+message ReceiveCoinsRequest { 
+  string address = 1;
+  int64  volume  = 2;
+}
+
+message ReceiveCoinsResponse {
+  bool success = 1;
+}

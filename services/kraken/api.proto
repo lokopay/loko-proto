@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package bleev.services.kraken.v1;
+
+option java_multiple_files  = true;
+option java_package         = "com.nba.services.kraken.v1";
+option java_outer_classname = "KrakenServiceApiProto";
+option go_package           = "krakenv1";
+option csharp_namespace     = "Nba.Services.Kraken.V1";
+option objc_class_prefix    = "BSK";
+option php_namespace        = "Bleev\\Services\\Kraken\\V1";
+
+// service exchange is a service that handles interaction with kraken.
+service ServiceKrakenAPI {
+
+  // CheckPrice will check price for a given coin
+  rpc CheckPrice(CheckPriceRequest)
+      returns (CheckPriceResponse) {}
+  
+  // PlaceMarketOrder will update a moment.
+  rpc PlaceMarketOrder(PlaceMarketOrderRequest)
+      returns (PlaceMarketOrderResponse) {}
+
+  // GetOrder will commit to the purchase of a moment.
+  rpc GetOrder(GetOrderRequest)
+      returns (GetOrderResponse) {}
+  
+  // GetBalance will verify an order token, confirm the
+  rpc GetBalance(GetBalanceRequest)
+      returns (GetBalanceResponse) {}
+}
+
+message CheckPriceRequest {
+  string pair   = 1;
+  uint64 volume = 2;
+  double amount = 3;
+}
+
+message CheckPriceResponse { 
+  string pair      = 1;
+  double price     = 2;
+  double buyPrice  = 3;
+  double sellPrice = 4;
+  double updatedAt = 5;
+}
+
+message PlaceMarketOrderRequest {
+  string pair   = 1;
+  string volume = 2;
+  string side   = 3;
+}
+
+message PlaceMarketOrderResponse {
+  string orderId = 1;
+  string status  = 2;
+  double price   = 3;
+  double volume  = 4;
+  double cost    = 5;
+  double fee     = 6;
+}
+
+message GetOrderRequest {
+  string orderId   = 1;
+  string apiKey    = 2;
+  string apiSecret = 3;
+}
+
+message GetOrderResponse {
+  string orderId = 1;
+  string status  = 2;
+  double price   = 3;
+  double volume  = 4;
+  double cost    = 5;
+  double fee     = 6;
+}
+
+message GetBalanceRequest {
+  string apiKey    = 1;
+  string apiSecret = 2;
+}
+
+message GetBalanceResponse {
+  double BTC = 1;
+  double CAD = 2;
+}
